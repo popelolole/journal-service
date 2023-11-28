@@ -2,6 +2,10 @@ package se.kthraven.journalservice.Model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import se.kthraven.journalservice.Model.classes.Doctor;
@@ -13,6 +17,7 @@ import se.kthraven.journalservice.Persistence.IJournalPersistence;
 import se.kthraven.journalservice.Persistence.entities.EncounterDB;
 import se.kthraven.journalservice.Persistence.entities.ObservationDB;
 import se.kthraven.journalservice.Persistence.entities.PersonDB;
+import se.kthraven.journalservice.config.CustomAuthenticationToken;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -118,16 +123,21 @@ public class JournalService implements IJournalService{
         persistence.createObservation(observationDb);
     }
 
-
     private void checkAuthorityDoctorOrSamePatient(String patientId){
-        /*Person loggedIn = getCurrentUserPerson();
-        if(!loggedIn.getRole().equals(Role.DOCTOR) && !loggedIn.getId().equals(patientId))
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);*/
+        CustomAuthenticationToken authToken = (CustomAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        String personId = authToken.getPersonId();
+        String role = authToken.getRole();
+        System.out.println("hej, " + personId + role);
+
+        if(!role.equals("ROLE_" + Role.DOCTOR) && !personId.equals(patientId))
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
 
     private void checkAuthorityDoctorOrOther(){
-        /*Person loggedIn = getCurrentUserPerson();
-        if(!(loggedIn.getRole().equals(Role.DOCTOR) || loggedIn.getRole().equals(Role.OTHER)))
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);*/
+        CustomAuthenticationToken authToken = (CustomAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        String role = authToken.getRole();
+
+        if(!(role.equals("ROLE_" + Role.DOCTOR) || role.equals("ROLE_" + Role.OTHER)))
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
 }

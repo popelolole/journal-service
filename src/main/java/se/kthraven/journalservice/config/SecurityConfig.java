@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -18,15 +19,16 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login").permitAll()
+                        //.requestMatchers("/login").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(basic -> basic.init(http))
                 .csrf(csrf -> csrf.disable())
+                .addFilterBefore(new SimpleAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
-    @Bean
+    /*@Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
-    }
+    }*/
 }
