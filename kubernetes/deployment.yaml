@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: journal-deployment
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: journal
@@ -26,3 +26,16 @@ spec:
               value: password
             - name: MYSQL_DATABASE
               value: journaldb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: journal-service
+spec:
+  selector:
+    app: journal
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: NodePort
