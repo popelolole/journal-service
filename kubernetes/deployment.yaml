@@ -30,12 +30,25 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: journal-service
+  name: journal-service-external
 spec:
   selector:
     app: journal
   ports:
     - protocol: TCP
-      port: 8080
+      port: 80
       targetPort: 8080
+      nodePort: 31000
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: journal-service-internal
+spec:
+  selector:
+    app: journal
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
