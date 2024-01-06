@@ -22,4 +22,4 @@ jobs:
       with:
         push: true
         file: ./Dockerfile
-        tags: journal-service
+        tags: ${{ secrets.DOCKER_TAG }}
