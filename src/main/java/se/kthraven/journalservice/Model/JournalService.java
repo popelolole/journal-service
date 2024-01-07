@@ -17,7 +17,6 @@ import se.kthraven.journalservice.Persistence.IJournalPersistence;
 import se.kthraven.journalservice.Persistence.entities.EncounterDB;
 import se.kthraven.journalservice.Persistence.entities.ObservationDB;
 import se.kthraven.journalservice.Persistence.entities.PersonDB;
-import se.kthraven.journalservice.config.CustomAuthenticationToken;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -123,7 +122,12 @@ public class JournalService implements IJournalService{
         persistence.createObservation(observationDb);
     }
 
-    private void checkAuthorityDoctorOrSamePatient(String patientId){
+    @Override
+    public String getUserId(String personId){
+        return persistence.getUserId(personId);
+    }
+
+    /*private void checkAuthorityDoctorOrSamePatient(String patientId){
         CustomAuthenticationToken authToken = (CustomAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         String personId = authToken.getPersonId();
         String role = authToken.getRole();
@@ -139,5 +143,5 @@ public class JournalService implements IJournalService{
 
         if(!(role.equals("ROLE_" + Role.DOCTOR) || role.equals("ROLE_" + Role.OTHER)))
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-    }
+    }*/
 }

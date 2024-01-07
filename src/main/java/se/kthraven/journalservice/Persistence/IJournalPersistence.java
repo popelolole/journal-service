@@ -13,4 +13,6 @@ public interface IJournalPersistence {
      EncounterDB getEncounter(String id);
      void createEncounter(EncounterDB encounter);
      void createObservation(ObservationDB observation);
+
+     String getUserId(String personId);
 }

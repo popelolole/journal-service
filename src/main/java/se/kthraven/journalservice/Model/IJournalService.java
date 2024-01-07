@@ -15,4 +15,6 @@ public interface IJournalService {
     Encounter getEncounter(String id);
     void createEncounter(Encounter encounter);
     void createObservation(Observation observation, String encounterId);
+
+    String getUserId(String personId);
 }

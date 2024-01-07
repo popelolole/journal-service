@@ -88,4 +88,13 @@ public class JournalPersistence implements IJournalPersistence {
         em.getTransaction().commit();
         em.close();
     }
+
+    @Override
+    public String getUserId(String personId){
+        EntityManager em = DBManager.getEntityManager();
+
+        PersonDB person = em.find(PersonDB.class, personId);
+        em.close();
+        return person.getUserId();
+    }
 }

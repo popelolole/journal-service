@@ -61,4 +61,9 @@ public class Controller {
         journalService.createObservation(observation, encounterId);
         return observation;
     }
+
+    @GetMapping("/person/user-id")
+    public String getUserId(@RequestParam(value = "personId") String id){
+        return journalService.getUserId(id);
+    }
 }

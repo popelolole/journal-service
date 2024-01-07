@@ -36,6 +36,9 @@ public class PersonDB {
     @JoinColumn(name = "doctor_id")
     private PersonDB doctor;
 
+    @Column(name = "user_id")
+    private String userId;
+
     public PersonDB() {
     }
 
@@ -80,7 +83,7 @@ public class PersonDB {
         this.patients = patients;
     }
 
-    public PersonDB(String id, String name, Gender gender, Date dob, String phoneNumber, String email, Role role, ConditionDB condition, Collection<PersonDB> patients, PersonDB doctor) {
+    public PersonDB(String id, String name, Gender gender, Date dob, String phoneNumber, String email, Role role, ConditionDB condition, Collection<PersonDB> patients, PersonDB doctor, String userId) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -91,6 +94,7 @@ public class PersonDB {
         this.condition = condition;
         this.patients = patients;
         this.doctor = doctor;
+        this.userId = userId;
     }
 
     public String getId() {
@@ -171,5 +175,13 @@ public class PersonDB {
 
     public void setDoctor(PersonDB doctor) {
         this.doctor = doctor;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
