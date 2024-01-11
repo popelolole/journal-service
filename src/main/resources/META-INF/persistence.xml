@@ -10,7 +10,7 @@ http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://vm.cloud.cbh.kth.se:2518/journaldb"/>
             <property name="javax.persistence.jdbc.user" value="journalapp_user"/>
-            <property name="javax.persistence.jdbc.password" value="${DATABASE_PASSWORD)"/>
+            <property name="javax.persistence.jdbc.password" value="password"/>
         </properties>
     </persistence-unit>
 </persistence>
