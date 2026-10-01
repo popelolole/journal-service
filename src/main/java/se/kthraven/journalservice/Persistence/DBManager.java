@@ -8,7 +8,29 @@ public class DBManager {
     private static EntityManagerFactory emf;
 
     protected static void init() {
-        emf = Persistence.createEntityManagerFactory("journalappPU");
+        Map<String, String> properties = new HashMap<>();
+
+        properties.put(
+            "javax.persistence.jdbc.url",
+            System.getenv("DATABASE_URL")
+        );
+
+        properties.put(
+            "javax.persistence.jdbc.user",
+            System.getenv("DATABASE_USERNAME")
+        );
+
+        properties.put(
+            "javax.persistence.jdbc.password",
+            System.getenv("DATABASE_PASSWORD")
+        );
+
+        emf = Persistence.createEntityManagerFactory(
+            "journalappPU",
+            properties
+        );
+
+        emf = Persistence.createEntityManagerFactory("journalappPU", properties);
     }
 
     public static void close(){

@@ -16,16 +16,20 @@ spec:
         - name: journal
           image: docker.io/popelolole/journal-service:latest
           env:
-            - name: MYSQL_HOST
-              value: mysql-service
-            - name: MYSQL_PORT
-              value: "3306"
-            - name: MYSQL_USER
-              value: journalapp_user
-            - name: MYSQL_PASSWORD
-              value: password
-            - name: MYSQL_DATABASE
-              value: journaldb
+            - name: DATABASE_URL
+              value: jdbc:mysql://mysql-service:3306/journaldb
+
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: database-credentials
+                  key: username
+
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-credentials
+                  key: password
 ---
 apiVersion: v1
 kind: Service
